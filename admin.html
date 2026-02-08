@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Trekos - Админ Самбар</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Бүтээгдэхүүн нэмэх</h2>
+    <form id="add-product-form">
+      <input type="text" id="product-name" placeholder="Бүтээгдэхүүний нэр" required>
+      <input type="number" id="product-price" placeholder="Үнэ" required>
+      <input type="text" id="product-image" placeholder="Зураг URL" required>
+      <button type="submit">Нэмэх</button>
+    </form>
+  </div>
+
+  <div class="product-list-container">
+    <h2>Одоогийн бүтээгдэхүүнүүд</h2>
+    <ul id="product-list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

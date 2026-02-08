@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trekos Онлайн Дэлгүүр</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">TREKOS</div>
+    <nav>
+      <a href="#">Нүүр</a>
+      <a href="#products">Бүтээгдэхүүн</a>
+      <a href="#contact">Холбоо барих</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Манай шинэ бүтээгдэхүүнүүдийг сонирхоорой!</h1>
+      <p>Чанартай, загварлаг, боломжийн үнэтэй.</p>
+    </section>
+
+    <section id="products" class="products">
+      <h2>Бүтээгдэхүүнүүд</h2>
+      <div class="product-list">
+        <div class="product">
+          <img src="https://via.placeholder.com/200" alt="Бараа 1">
+          <h3>Том цүнх</h3>
+          <p>Үнэ: 55,000₮</p>
+          <button onclick="addToCart('Том цүнх', 55000)">Сагсанд нэмэх</button>
+        </div>
+        <div class="product">
+          <img src="https://via.placeholder.com/200" alt="Бараа 2">
+          <h3>Ухаалаг цаг</h3>
+          <p>Үнэ: 120,000₮</p>
+          <button onclick="addToCart('Ухаалаг цаг', 120000)">Сагсанд нэмэх</button>
+        </div>
+        <div class="product">
+          <img src="https://via.placeholder.com/200" alt="Бараа 3">
+          <h3>Bluetooth чихэвч</h3>
+          <p>Үнэ: 85,000₮</p>
+          <button onclick="addToCart('Bluetooth чихэвч', 85000)">Сагсанд нэмэх</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="cart">
+      <h2>🛒 Миний сагс</h2>
+      <ul id="cart-items"></ul>
+      <p>Нийт үнэ: <span id="total-price">0</span>₮</p>
+    </section>
+
+    <section id="contact" class="contact-form">
+      <h2>Холбоо барих</h2>
+      <form onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Таны нэр" required>
+        <input type="email" placeholder="Имэйл хаяг" required>
+        <textarea placeholder="Мессеж бичнэ үү..." required></textarea>
+        <button type="submit">Илгээх</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 TREKOS. Бүх эрх хуулиар хамгаалагдсан.</p>
+  </footer>
+
+  <script>
+    let cart = [];
+let totalPrice = 0;
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  totalPrice += price;
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = '';
+  cart.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `${item.name} - ${item.price.toLocaleString()}₮`;
+    cartItems.appendChild(li);
+  });
+  document.getElementById('total-price').textContent = totalPrice.toLocaleString();
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  alert('Таны мессеж илгээгдлээ. Баярлалаа!');
+  event.target.reset();
+}
+
+  </script>
+</body>
+</html>
