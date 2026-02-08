@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api'; // Production дээр өөрчлөгдөнө
+const API_URL = 'https://trekos-backend.onrender.com/api';
 
 // LOGIN
 const loginForm = document.getElementById('login-form');
@@ -19,10 +19,11 @@ if (loginForm) {
       if (res.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('isAdmin', data.isAdmin);
+        localStorage.setItem('userId', data.userId);
         alert("Амжилттай нэвтэрлээ!");
 
         if (data.isAdmin) {
-          window.location.href = 'admin.html'; // дараа нь хийх
+          window.location.href = 'admin.html';
         } else {
           window.location.href = 'index.html';
         }
@@ -53,7 +54,7 @@ if (registerForm) {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Амжилттай бүртгэгдлээ! Одоо нэвтэрнэ үү.");
+        alert("Амжилттай бүртгэгдлээ! Одоо нэвтрэнэ үү.");
         window.location.href = 'login.html';
       } else {
         document.getElementById('register-error').textContent = data;
@@ -63,8 +64,9 @@ if (registerForm) {
     }
   });
 }
-// 🌐 API URL
-const API = 'https://trekos-backend.onrender.com/api';
+
+// 🧾 Admin хэсэг
+
 const token = localStorage.getItem('token');
 const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
@@ -84,18 +86,16 @@ if (addForm) {
     const image = document.getElementById('product-image').value;
 
     try {
-      const res = await fetch(`${API}/products`, {
+      const res = await fetch(`${API_URL}/products`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, price, image })
       });
 
       if (res.ok) {
         alert('Амжилттай нэмлээ!');
         addForm.reset();
-        fetchProducts(); // шинэчлэнэ
+        fetchProducts();
       } else {
         alert('Алдаа гарлаа.');
       }
@@ -109,10 +109,10 @@ if (addForm) {
 const productList = document.getElementById('product-list');
 async function fetchProducts() {
   if (!productList) return;
-  const res = await fetch(`${API}/products`);
+  const res = await fetch(`${API_URL}/products`);
   const products = await res.json();
   productList.innerHTML = '';
-  products.forEach((p, i) => {
+  products.forEach((p) => {
     const li = document.createElement('li');
     li.innerHTML = `
       <img src="${p.image}" width="50" />
@@ -128,7 +128,9 @@ async function deleteProduct(id) {
   if (!ok) return;
 
   try {
-    const res = await fetch(`${API}/products/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/products/${id}`, {
+      method: 'DELETE'
+    });
     if (res.ok) {
       alert('Устгагдлаа');
       fetchProducts();
@@ -141,12 +143,8 @@ async function deleteProduct(id) {
 if (productList) {
   fetchProducts();
 }
-<section class="cart">
-  <h2>🛒 Миний сагс</h2>
-  <ul id="cart-items"></ul>
-  <p>Нийт үнэ: <span id="total-price">0</span>₮</p>
-  <button onclick="submitOrder()">Захиалах</button>
-</section>
+
+// 🛒 Сагсанд захиалга илгээх
 function submitOrder() {
   if (cart.length === 0) {
     alert("Сагс хоосон байна!");
@@ -155,7 +153,7 @@ function submitOrder() {
 
   const userId = localStorage.getItem('userId') || 'guest';
 
-  fetch(`${API}/orders`, {
+  fetch(`${API_URL}/orders`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
