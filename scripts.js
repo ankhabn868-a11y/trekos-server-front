@@ -64,7 +64,7 @@ if (registerForm) {
   });
 }
 // 🌐 API URL
-const API = 'http://localhost:5000/api';
+const API = 'https://trekos-backend.onrender.com/api';
 const token = localStorage.getItem('token');
 const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
